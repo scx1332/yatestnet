@@ -123,10 +123,10 @@ async def main():
                    f'--syncmode=full ' \
                    f'--gcmode=archive ' \
                    f'--http ' \
-                   f'--http.addr=0.0.0.0 ' \
+                   f'--http.addr=127.0.0.1 ' \
                    f'--http.vhosts=* ' \
                    f'--http.corsdomain=* ' \
-                   f'--http.api=eth,net,web3,txpool ' \
+                   f'--http.api=eth,net,web3,txpool,debug ' \
                    f'--rpc.txfeecap=1000 ' \
                    f'--networkid={chain_num} {miner_settings}'
     print(geth_command)
