@@ -1,0 +1,3 @@
+[submodule "contracts-web3-create2"]
+	path = contracts-web3-create2
+	url = https://github.com/scx1332/contracts-web3-create2.git
