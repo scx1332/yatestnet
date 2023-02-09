@@ -6,8 +6,6 @@ services:
     command: python -u setup_chain.py
     volumes:
       - ./genesis/:/runtime/tmp
-    ports:
-      - '8545:8545'
     environment:
       - CHAIN_ID=987789
       - CHAIN_NAME=Golem test chain
