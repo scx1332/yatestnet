@@ -1,7 +1,3 @@
-[submodule "contracts-web3-create2"]
-	path = contracts-web3-create2
-	url = https://github.com/scx1332/contracts-web3-create2.git
-	branch = scx1332/deploy_test_contracts
 [submodule "yablockscout"]
 	path = yablockscout
 	url = https://github.com/scx1332/yablockscout.git
