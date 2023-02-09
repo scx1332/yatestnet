@@ -29,21 +29,26 @@ def capture_output(process):
 async def main():
     load_dotenv()
     chain_num = 987789
-    tmp_dir = 'tmp/tmp'
+    tmp_dir = 'tmp/chaindata'
     chain_dir = f"{tmp_dir}/chain{chain_num}"
     genesis_file = f"{tmp_dir}/genesis{chain_num}.json"
+    signer_password_file = f"{tmp_dir}/password{chain_num}.json"
 
     # get private key from env
     main_account = os.environ['MAIN_ACCOUNT_PRIVATE_KEY']
+    faucet_account = os.environ['FAUCET_ACCOUNT_PRIVATE_KEY']
     signer_account = os.environ['SIGNER_ACCOUNT_PRIVATE_KEY']
     keystore_password = os.environ['SIGNER_ACCOUNT_KEYSTORE_PASSWORD']
     keep_running = int(os.environ['KEEP_RUNNING']) == 1
 
-    (address1, private_key1) = (
+    (main_address, main_account_private_key) = (
         Account.from_key(main_account).address,
         main_account)
+    (faucet_address, faucet_account_private_key) = (
+        Account.from_key(faucet_account).address,
+        faucet_account)
 
-    print(f"Loaded main account: {address1}")
+    print(f"Loaded main account: {main_address}")
 
     (signer_address, signer_private_key) = (
         Account.from_key(signer_account).address,
@@ -85,17 +90,7 @@ async def main():
                          + "000000000000000000000000000000000000000000000000000000000000000000"
                          + "0000000000000000000000000000000000000000000000000000000000000000",
             "alloc": {
-                address1: {"balance": '1000000000000000000000000000'},
-                "0x001066290077e38f222cc6009c0c7a91d5192303": {"balance": '1000000000000000000000000000'},
-                "0x00203654961340f35726ce63eb4bf6912a62022e": {"balance": '1000000000000000000000000000'},
-                "0x003047f2f6b0c66a07e60f149276211dc2ff7489": {"balance": '1000000000000000000000000000'},
-                "0x0040bcefcb706641104a9feb95ad59830c30671b": {"balance": '1000000000000000000000000000'},
-                "0x005014c6eea59620aea92298f8af003bed130ad0": {"balance": '1000000000000000000000000000'},
-                "0x0060967f2181b0e496b1a1a0389b9c2f3d8dc2a9": {"balance": '1000000000000000000000000000'},
-                "0x0070619c46c4b2738c0ce73d63bbe061391fd80f": {"balance": '1000000000000000000000000000'},
-                "0x0080dc12044e18c8f53c7ccced0ef776d4b3bfd8": {"balance": '1000000000000000000000000000'},
-                "0x0090167b580b0b3c79e24f6b919762b9e5cf0a05": {"balance": '1000000000000000000000000000'},
-                "0x0100652743be2dc18637c05bf5e49cfc87f30243": {"balance": '1000000000000000000000000000'}
+                main_address: {"balance": '1000000000000000000000000000'}
             }
         }
 
@@ -106,13 +101,13 @@ async def main():
 
         keystore = Account.encrypt(signer_account, keystore_password)
 
-        with open(f'{chain_dir}/keystore/testnet_key', 'w') as f:
+        with open(f'{chain_dir}/keystore/signer_key', 'w') as f:
             f.write(json.dumps(keystore, indent=4))
-        with open(f'{chain_dir}/keystore/testnet_key_pass.txt', 'w') as f:
+        with open(signer_password_file, 'w') as f:
             f.write(keystore_password)
 
     # clique signer/miner settings
-    miner_settings = f"--mine --allow-insecure-unlock --unlock {signer_address} --password {chain_dir}/keystore/testnet_key_pass.txt"
+    miner_settings = f"--mine --miner.etherbase={signer_address} --allow-insecure-unlock --unlock {signer_address} --password {signer_password_file}"
     geth_command = f'geth --datadir={chain_dir} ' \
                    f'--nodiscover ' \
                    f'--syncmode=full ' \
@@ -135,7 +130,7 @@ async def main():
 
     if deploy_contracts:
         # deploy contracts
-        os.chdir("contracts-web3-create2")
+        os.chdir("contracts")
         os.system("npm run deploy_dev")
 
     print("Blockchain is ready for testing")
