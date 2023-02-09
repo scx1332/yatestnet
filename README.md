@@ -43,6 +43,17 @@ docker-compose run -d
 Gas fixer is needed to generate non zero gas prices on the network that has almost no transactions.
 https://github.com/scx1332/blockchain_price_fixer.git
 
+## Setup web3 proxy
+
+Web3 proxy is useful tool to optionally generate wrong requests, but also to inspect and get all calls.
+
+## TODO: create faucet
+
+## Testnet is ready to be used
+
+http://deployment.org:4000/ - blockscout
+http://deployment.org:8546/web3/{your_key} - web3 proxy
+http://deployment.org:8545 - access without proxy
 
 
 
