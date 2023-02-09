@@ -29,3 +29,20 @@ password987789.json
 genesis987789.json can be used to spawn additional node of the same chain.
 password987789.json is used to unlock signer on main node.
 chain987789 contains local node chain data.
+
+## Setup gas scanner
+
+Clone yablockscout repo 
+https://github.com/scx1332/yablockscout
+
+go to docker-compose directory and run docker-compose build
+docker-compose run -d
+
+## Setup gas fixer
+
+Gas fixer is needed to generate non zero gas prices on the network that has almost no transactions.
+https://github.com/scx1332/blockchain_price_fixer.git
+
+
+
+
