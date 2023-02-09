@@ -51,6 +51,11 @@ Web3 proxy is useful tool to optionally generate wrong requests, but also to ins
 
 ## Testnet is ready to be used
 
+Test yagna using
+
+https://github.com/scx1332/yagna_payment_testing
+
+
 http://deployment.org:4000/ - blockscout
 http://deployment.org:8546/web3/{your_key} - web3 proxy
 http://deployment.org:8545 - access without proxy
