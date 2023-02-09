@@ -2,13 +2,9 @@ import json
 import os
 import asyncio
 import secrets
-import shutil
-import signal
 import subprocess
 import sys
 import threading
-import time
-import web3
 from eth_account import Account
 from dotenv import load_dotenv
 
@@ -36,7 +32,6 @@ async def main():
     tmp_dir = 'tmp/tmp'
     chain_dir = f"{tmp_dir}/chain{chain_num}"
     genesis_file = f"{tmp_dir}/genesis{chain_num}.json"
-    addresses_file = f"{tmp_dir}/addresses{chain_num}.json"
 
     # get private key from env
     main_account = os.environ['MAIN_ACCOUNT_PRIVATE_KEY']
@@ -130,7 +125,6 @@ async def main():
                    f'--rpc.txfeecap=1000 ' \
                    f'--networkid={chain_num} {miner_settings}'
     print(geth_command)
-    # os.system(geth_command)
 
     geth_command_split = geth_command.split(' ')
     process = subprocess.Popen(geth_command_split, stdout=subprocess.PIPE)
