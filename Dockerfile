@@ -1,6 +1,6 @@
 FROM ethereum/client-go as builder
 
-FROM nikolaik/python-nodejs:python3.10-nodejs16
+FROM nikolaik/python-nodejs:python3.10-nodejs18
 RUN apt-get update
 RUN apt-get install -y vim
 

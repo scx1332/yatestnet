@@ -33,6 +33,7 @@ async def main():
     chain_dir = f"{tmp_dir}/chain{chain_num}"
     genesis_file = f"{tmp_dir}/genesis{chain_num}.json"
     signer_password_file = f"{tmp_dir}/password{chain_num}.json"
+    geth_command_file = f"{tmp_dir}/geth-command{chain_num}.sh"
 
     # get private key from env
     main_account = os.environ['MAIN_ACCOUNT_PRIVATE_KEY']
@@ -107,7 +108,6 @@ async def main():
             f.write(keystore_password)
 
     # clique signer/miner settings
-    miner_settings = f"--mine --miner.etherbase={signer_address} --allow-insecure-unlock --unlock {signer_address} --password {signer_password_file}"
     geth_command = f'geth --datadir={chain_dir} ' \
                    f'--nodiscover ' \
                    f'--syncmode=full ' \
@@ -118,8 +118,21 @@ async def main():
                    f'--http.corsdomain=* ' \
                    f'--http.api=eth,net,web3,txpool,debug ' \
                    f'--rpc.txfeecap=1000 ' \
-                   f'--networkid={chain_num} {miner_settings}'
+                   f'--networkid={chain_num}'
+    enable_mining = True
+    if enable_mining:
+        miner_settings = f" --mine --miner.etherbase={signer_address} --allow-insecure-unlock --unlock={signer_address} --password={signer_password_file}"
+        geth_command += miner_settings
+    enable_metrics = True
+    if enable_metrics:
+        metrics_settings = f" --metrics --metrics.addr=0.0.0.0 --metrics.expensive"
+        geth_command += metrics_settings
+    disable_ipc = True
+    if disable_ipc:
+        geth_command += " --ipcdisable"
     print(geth_command)
+    with open(geth_command_file, "w") as f:
+        f.write(geth_command)
 
     geth_command_split = geth_command.split(' ')
     process = subprocess.Popen(geth_command_split, stdout=subprocess.PIPE)
