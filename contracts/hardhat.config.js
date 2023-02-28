@@ -1,15 +1,17 @@
 require('dotenv').config({path:'.env'})
-
 require("@nomicfoundation/hardhat-toolbox");
 
 private_key = process.env.MAIN_ACCOUNT_PRIVATE_KEY || "0x0000000000000000000000000000000000000000000000000000000000000000";
 
+
+
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
     defaultNetwork: "dev",
+
     networks: {
         dev: {
-            url: "http://127.0.0.1:8545",
+            url: "http://145.239.69.80:8545",
             accounts: [private_key],
             chainId: 987789
         }

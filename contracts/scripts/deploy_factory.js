@@ -21,7 +21,7 @@ async function main() {
     }
     const erc20Factory = await hre.ethers.getContractFactory("ERC20");
     const BIG_18 = hre.ethers.BigNumber.from("1000000000000000000");
-    const erc20Contract = await erc20Factory.deploy(pubAddr, BIG_18.mul(1000000000));
+    const erc20Contract = await erc20Factory.deploy(pubAddr, BIG_18.mul(1000000000000));
     await erc20Contract.deployed();
     let glm_token = erc20Contract.address;
     console.log("GLM ERC20 test token deployed to:", glm_token);
@@ -36,10 +36,10 @@ async function main() {
 
     const faucetDistr = await distr.deploy(glm_token);
     await faucetDistr.deployed();
-    console.log("Faucet deployed to:", faucetDistr.address);
+    console.log("Distribute contract deployed to:", faucetDistr.address);
 
 
-    const res = await erc20Contract.approve(multiTransfer.address, BIG_18.mul(1000000000));
+    const res = await erc20Contract.approve(multiTransfer.address, BIG_18.mul(1000000000000));
     const receipt = await res.wait();
     console.log("Approve result: ", receipt.status);
 
@@ -56,7 +56,7 @@ async function main() {
     let addr_list = [faucet_addr];
     let amounts = [];
     for (let addr in addr_list) {
-        amounts.push(BIG_18.mul(100000000));
+        amounts.push(BIG_18.mul(100000000000));
     }
 
     let tx = await multiTransfer.golemTransferDirect(addr_list, amounts);

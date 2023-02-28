@@ -60,5 +60,8 @@ http://deployment.org:4000/ - blockscout
 http://deployment.org:8546/web3/{your_key} - web3 proxy
 http://deployment.org:8545 - access without proxy
 
+## To easly send test tokens to address:
 
-
+```
+docker exec -it yatestnet-geth-1 python send_eth_and_glms.py --glm 1000000 --eth 1000 --address=0x406a6cF8C67fc2a73DE02AAB88968Ab0167fC61c
+```
