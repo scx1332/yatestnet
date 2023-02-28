@@ -1,6 +1,8 @@
 import argparse
 import os
-import sys
+
+# This wrapper script is needed because somehow hardhat don't like to get arguments from command line
+# So the environment variables are used instead
 
 parser = argparse.ArgumentParser(
     prog='send_eth_and_glms.py',
