@@ -24,3 +24,9 @@ print("# Main faucet")
 private_key = "0x" + secrets.token_hex(32)
 print(f"FAUCET_ACCOUNT_PRIVATE_KEY={private_key}")
 print(f"FAUCET_ACCOUNT_PUBLIC_ADDRESS={Account.from_key(private_key).address}")
+
+print("# Fill these values after deploying contracts")
+print(f"GLM_CONTRACT_ADDRESS=fill_me")
+print(f"MULTI_PAYMENT_CONTRACT_ADDRESS=fill_me")
+print(f"DISTRIBUTE_CONTRACT_ADDRESS=fill_me")
+
