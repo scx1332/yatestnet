@@ -3,11 +3,10 @@ import os
 import sys
 
 parser = argparse.ArgumentParser(
-    prog = 'ProgramName',
-    description = 'What the program does',
-    epilog = 'Text at the bottom of help')
+    prog='send_eth_and_glms.py',
+    description='Send ETH and GLMs to an address')
 
-parser.add_argument('--address', default="0x")
+parser.add_argument('--address', help='Address to send ETH and GLMs to', required=True)
 parser.add_argument('--eth', default="1.0")
 parser.add_argument('--glm', default="1.0")
 
@@ -19,4 +18,3 @@ os.environ["GLM_SEND_AMOUNT"] = args.glm
 npx_command_split = "npx hardhat run --network dev scripts/send_eth_and_glms.js"
 os.chdir("contracts")
 os.system(npx_command_split)
-
