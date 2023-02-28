@@ -32,6 +32,13 @@ async function main() {
     await multiTransfer.deployed();
     console.log("MultiTransferERC20 deployed to:", multiTransfer.address);
 
+    const distr = await hre.ethers.getContractFactory("Distribute");
+
+    const faucetDistr = await distr.deploy(glm_token);
+    await faucetDistr.deployed();
+    console.log("Faucet deployed to:", faucetDistr.address);
+
+
     const res = await erc20Contract.approve(multiTransfer.address, BIG_18.mul(1000000000));
     const receipt = await res.wait();
     console.log("Approve result: ", receipt.status);
