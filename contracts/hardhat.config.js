@@ -9,7 +9,7 @@ module.exports = {
     defaultNetwork: "dev",
     networks: {
         dev: {
-            url: "http://127.0.0.1:8545",
+            url: process.env.YATESTNET_RPC || "http://127.0.0.1:8545",
             accounts: [private_key],
             chainId: 987789
         }
